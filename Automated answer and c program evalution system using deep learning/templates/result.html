@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Execution Result</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better readability */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            background-color: #ffffff; /* White background for the main container */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #343a40; /* Dark gray for main heading */
+            text-align: center;
+        }
+        p, h2, h3 {
+            color: #495057; /* Consistent text color */
+        }
+        .status-success {
+            color: #28a745; /* Green for success */
+            font-weight: bold;
+        }
+        .status-error {
+            color: #dc3545; /* Red for errors */
+            font-weight: bold;
+        }
+        pre {
+            background-color: #f1f1f1; /* Light gray background for code output */
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            list-style-type: square; /* Better list styling */
+        }
+        ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Program Execution Result</h1>
+        <p><strong>Status:</strong> 
+            <span class="{{ 'status-success' if status == 'Success' else 'status-error' }}">{{ status }}</span>
+        </p>
+
+        {% if status == 'Compilation Error' or status == 'Runtime Error' %}
+            <h2>Error Details</h2>
+            <p><strong>Total Errors:</strong> {{ message.total_errors }}</p>
+            <p><strong>Critical Errors:</strong> {{ message.critical_errors }}</p>
+            <p><strong>Syntax Errors:</strong> {{ message.syntax_errors }}</p>
+            <p><strong>Warnings:</strong> {{ message.warnings }}</p>
+            <h3>Error Messages:</h3>
+            <ul>
+                {% for msg in message.error_messages %}
+                    <li>{{ msg }}</li>
+                {% endfor %}
+            </ul>
+            <p><strong>Marks:</strong> {{ marks }}/10</p>
+        {% else %}
+            <h2>Program Output</h2>
+            <pre>{{ message }}</pre>
+            <p><strong>Marks:</strong> {{ marks }}/10</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
